@@ -4,7 +4,7 @@ from AnaAlgorithm.DualUseConfig import createService
 import ROOT
 
 def makeSequence (analysis_dict):
-    data_type = analysis_dict['DataType']
+    data_type = analysis_dict['DataType']  # FIXME add protection
 
     alg_seq = AnaAlgSequence()
     
@@ -51,7 +51,7 @@ def makeSequence (analysis_dict):
     #alg_seq += tauSequence
 
     if 'AddJets' in analysis_dict:
-      jet_container = analysis_dict['AddJets']['JetContainer']
+      jet_container = analysis_dict['AddJets']['JetContainer']  # FIXME add protection
       other_options = {}
       if 'Options' in analysis_dict['AddJets']:
         other_options = analysis_dict['AddJets']['Options']

@@ -25,6 +25,8 @@ atlas_add_library( xAHplusCPalgsExample
                    xAODJet xAODMuon xAODParticleEvent
                    xAODAnaHelpersLib 
                    SystematicsHandlesLib
+                   AsgTestingLib
+                   SelectionHelpersLib
                    )
 
 # Install files from the package:

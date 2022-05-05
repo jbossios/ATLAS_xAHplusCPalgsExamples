@@ -10,6 +10,8 @@
 #include <EventLoop/Job.h>
 #include <EventLoop/StatusCode.h>
 #include <EventLoop/Worker.h>
+#include <SelectionHelpers/ISelectionAccessor.h>
+#include <AsgTesting/UnitTest.h>
 
 // EDM includes:
 #include "xAODCore/ShallowCopy.h"
@@ -52,18 +54,18 @@ void HelpTreeBaseExtended::AddJetsUser(const std::string& detailStr, const std::
 }
 
 void HelpTreeBaseExtended::FillJetsUser( const xAOD::Jet* jet, const std::string& jetName) {
+  (void)jetName;
   // jvt_selection
   if(m_addJVTdec) {
-    unsigned int jvtDec;
-    bool status = jet->getAttribute<unsigned int>("jvt_selection", jvtDec);
-    std::cout << "status = " << status << std::endl; // Temporary
-    std::cout << "jvtDec = " << jvtDec << std::endl; // Temporary
-    if(status){ m_jet_jvt_dec.push_back(jvtDec); }
-    else{ m_jet_jvt_dec.push_back(-999); }
+    std::unique_ptr<CP::ISelectionAccessor> acc;
+    ASSERT_SUCCESS (CP::makeSelectionAccessor ("jvt_selection,as_bits", acc));
+    unsigned int jvtDec = int(acc->getBool (*jet));
+    m_jet_jvt_dec.push_back(jvtDec);
   }
 }
 
 void HelpTreeBaseExtended::ClearJetsUser(const std::string& jetName) {
+  (void)jetName;
   if(m_addJVTdec){
     m_jet_jvt_dec.clear();
   }
