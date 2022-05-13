@@ -11,6 +11,7 @@
 
 #include "xAODParticleEvent/Particle.h"
 #include <xAODMuon/MuonContainer.h>
+#include <xAODEgamma/ElectronContainer.h>
 #include <xAODJet/JetContainer.h>
 
 // external tools include(s):
@@ -41,6 +42,7 @@ class TTreeMaker : public EL::AnaAlgorithm
  
  CP::SysListHandle m_systematicsList {this};
  CP::SysReadHandle<xAOD::MuonContainer> m_muonHandle {this, "muons", "outMuons_%SYS%", "the muon collection to run on"};
+ CP::SysReadHandle<xAOD::ElectronContainer> m_elHandle {this, "electrons", "outElectrons_%SYS%", "the electron collection to run on"};
  CP::SysReadHandle<xAOD::JetContainer> m_jetHandle {this, "jets", "outJets_%SYS%", "the jet collection to run on"};
  
  bool m_debug;
@@ -52,8 +54,8 @@ class TTreeMaker : public EL::AnaAlgorithm
  std::string m_muonDetailStr;
  std::string m_tauContainerName;
  std::string m_tauDetailStr;
- std::string m_elecContainerName;
- std::string m_elecDetailStr;
+ std::string m_elContainerName;
+ std::string m_elDetailStr;
  std::string m_photonContainerName;
  std::string m_photonDetailStr;
  std::string m_metContainerName;

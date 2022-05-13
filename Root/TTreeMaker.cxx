@@ -34,8 +34,11 @@ TTreeMaker :: TTreeMaker (const std::string& name,ISvcLocator *pSvcLocator) : EL
  declareProperty("m_outputStream", m_outputStream = "TTree");
  declareProperty("m_muonContainerName", m_muonContainerName = "");
  declareProperty("m_muonDetailStr", m_muonDetailStr = "");
+ declareProperty("m_elContainerName", m_elContainerName = "");
+ declareProperty("m_elDetailStr", m_elDetailStr = "");
  declareProperty("m_jetContainerName", m_jetContainerName = "");
  declareProperty("m_jetDetailStr", m_jetDetailStr = "");
+ declareProperty("m_evtDetailStr", m_evtDetailStr = "");
  
 }
 
@@ -56,6 +59,7 @@ StatusCode TTreeMaker :: initialize ()
  if(m_debug) Info("initialize()", "after add store");
  
  m_systematicsList.addHandle(m_muonHandle);
+ m_systematicsList.addHandle(m_elHandle);
  m_systematicsList.addHandle(m_jetHandle);
  ANA_CHECK (m_systematicsList.initialize());
  
@@ -110,6 +114,14 @@ StatusCode TTreeMaker :: execute ()
     const xAOD::MuonContainer* muons(nullptr);
     ANA_CHECK (m_muonHandle.retrieve (muons, sys));
     m_helpTree[sysname]->FillMuons(muons, HelperFunctions::getPrimaryVertex( vertices ) );
+  }
+  if(!m_elContainerName.empty())
+  {
+    if(m_debug) cout << " Filling electrons " << endl;
+    string elContainerName=m_elContainerName;
+    const xAOD::ElectronContainer* electrons(nullptr);
+    ANA_CHECK (m_elHandle.retrieve (electrons, sys));
+    m_helpTree[sysname]->FillElectrons(electrons, HelperFunctions::getPrimaryVertex( vertices ) );
   }
   if(!m_jetContainerName.empty())
   {
@@ -177,6 +189,9 @@ StatusCode TTreeMaker::AddTree(string syst = "")
 
   if(!m_muonContainerName.empty())
     m_helpTree[syst]->AddMuons(m_muonDetailStr);
+
+  if(!m_elContainerName.empty())
+    m_helpTree[syst]->AddElectrons(m_elDetailStr);
 
   if(!m_jetContainerName.empty())
     m_helpTree[syst]->AddJets(m_jetDetailStr);

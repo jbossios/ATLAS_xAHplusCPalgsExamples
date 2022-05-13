@@ -22,7 +22,7 @@ atlas_add_library( xAHplusCPalgsExample
                    INCLUDE_DIRS ${ROOT_INCLUDE_DIRS}
                    LINK_LIBRARIES ${ROOT_LIBRARIES} EventLoop xAODRootAccess 
                    xAODEventInfo
-                   xAODJet xAODMuon xAODParticleEvent
+                   xAODJet xAODMuon xAODEgamma xAODParticleEvent
                    xAODAnaHelpersLib 
                    SystematicsHandlesLib
                    AsgTestingLib

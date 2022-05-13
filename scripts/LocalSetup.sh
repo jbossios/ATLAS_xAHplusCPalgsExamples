@@ -1,6 +1,6 @@
 setupATLAS
 cd source/
-asetup AnalysisBase,master,latest
+asetup AnalysisBase,22.2.73
 cd ../build
 cmake ../source
 make -j3
