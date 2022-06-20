@@ -46,7 +46,8 @@ class TTreeMaker : public EL::AnaAlgorithm
  CP::SysReadHandle<xAOD::JetContainer> m_jetHandle {this, "jets", "outJets_%SYS%", "the jet collection to run on"};
  
  bool m_debug;
- 
+
+ std::string m_trigDetailStr;
  std::string m_evtDetailStr;
  std::string m_jetContainerName;
  std::string m_jetDetailStr;

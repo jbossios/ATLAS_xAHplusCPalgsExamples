@@ -39,6 +39,7 @@ TTreeMaker :: TTreeMaker (const std::string& name,ISvcLocator *pSvcLocator) : EL
  declareProperty("m_jetContainerName", m_jetContainerName = "");
  declareProperty("m_jetDetailStr", m_jetDetailStr = "");
  declareProperty("m_evtDetailStr", m_evtDetailStr = "");
+ declareProperty("m_trigDetailStr", m_trigDetailStr = "");
  
 }
 
@@ -107,24 +108,21 @@ StatusCode TTreeMaker :: execute ()
   
   m_helpTree[sysname]->FillEvent( eventInfo );
   
-  if(!m_muonContainerName.empty())
-  {
+  if(!m_muonContainerName.empty()){
     if(m_debug) cout << " Filling muons " << endl;
     string muonContainerName=m_muonContainerName;
     const xAOD::MuonContainer* muons(nullptr);
     ANA_CHECK (m_muonHandle.retrieve (muons, sys));
     m_helpTree[sysname]->FillMuons(muons, HelperFunctions::getPrimaryVertex( vertices ) );
   }
-  if(!m_elContainerName.empty())
-  {
+  if(!m_elContainerName.empty()){
     if(m_debug) cout << " Filling electrons " << endl;
     string elContainerName=m_elContainerName;
     const xAOD::ElectronContainer* electrons(nullptr);
     ANA_CHECK (m_elHandle.retrieve (electrons, sys));
     m_helpTree[sysname]->FillElectrons(electrons, HelperFunctions::getPrimaryVertex( vertices ) );
   }
-  if(!m_jetContainerName.empty())
-  {
+  if(!m_jetContainerName.empty()){
     if(m_debug) cout << " Filling jets " << endl;
     string jetContainerName = m_jetContainerName;
     const xAOD::JetContainer* jets(nullptr);
@@ -132,6 +130,10 @@ StatusCode TTreeMaker :: execute ()
     m_helpTree[sysname]->FillJets(jets, HelperFunctions::getPrimaryVertexLocation( vertices ), "jet");
   }
   m_helpTree[sysname]->Fill();
+  if(!m_trigDetailStr.empty()){
+    if(m_debug) cout << " Filling trigger information " << endl;
+    m_helpTree[sysname]->FillTrigger(eventInfo);
+  }
   
  } //for sys list
   
@@ -195,6 +197,9 @@ StatusCode TTreeMaker::AddTree(string syst = "")
 
   if(!m_jetContainerName.empty())
     m_helpTree[syst]->AddJets(m_jetDetailStr);
+
+  if(!m_trigDetailStr.empty())
+    m_helpTree[syst]->AddTrigger(m_trigDetailStr);
 
   // SetAutoFlush to reduce memory use
   outTree->SetAutoFlush(-500000);

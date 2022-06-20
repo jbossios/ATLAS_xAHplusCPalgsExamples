@@ -62,6 +62,7 @@ c.algorithm("BasicEventSelection", {
     "m_applyCoreFlagsCut"         : False,
     "m_applyTriggerCut"           : True,
     "m_triggerSelection"          : "HLT_j360 | HLT_mu20_iloose_L1MU15 | HLT_mu26_ivarmedium | HLT_e24_lhmedium_L1EM20VH | HLT_e26_lhtight_nod0_ivarloose",
+    "m_storeTrigDecisions"        : True,
     "m_useMetaData"               : True,
     check_duplicates_flag         : True,
 } )
@@ -90,4 +91,5 @@ c.algorithm("TTreeMaker", {
     "m_jetContainerName"     : "outJets",
     "m_jetDetailStr"         : "kinematic jvt_selection",
     "m_evtDetailStr"         : "pileup pileupsys",
+    "m_trigDetailStr"        : "passTriggers",
 } )
